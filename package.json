@@ -1,0 +1,24 @@
+{
+  "name": "react-basics",
+  "version": "1.0.0",
+  "description": "This is a proj where I used for the learning / brushing up my react skills",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/srinivasan-r23/react.git"
+  },
+  "keywords": [
+    "React",
+    "Basics",
+    "React"
+  ],
+  "author": "Srini",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/srinivasan-r23/react/issues"
+  },
+  "homepage": "https://github.com/srinivasan-r23/react#readme"
+}
