@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/srinivasan-r23/react/issues"
   },
-  "homepage": "https://github.com/srinivasan-r23/react#readme"
+  "homepage": "https://github.com/srinivasan-r23/react#readme",
+  "devDependencies": {
+    "parcel": "^2.11.0"
+  }
 }
