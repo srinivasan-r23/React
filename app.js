@@ -1,47 +1,72 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { resList } from "./utils";
 
-// const heading = React.createElement(
-//   "h1",
-//   { id: "heading", xyz: "abc" },
-//   "Hello World from React"
-// );
-
-const CounterComponent = (initialCount) => {
-  // State management using closure
-  let count = initialCount || 0;
-
-  // The returned function represents the render function
-    return (
-      <div>
-        <p>Count: {count}</p>
-        <button onClick={() => count++}>Increment</button>
-      </div>
-    );
-};
-const jsxHeading = <h1>Hello React!</h1>;
-const Counter1 = CounterComponent(1); //I.  call function and assingn to element
-console.log(Counter1)
-const Component1 = () => {
+const Header = () => {
   return (
-    <div>
-   I'm from component but coming from from element 
-      
+    <div className="header">
+      <div className="logo-container">
+        <img
+          className="logo"
+          src="https://png.pngtree.com/template/20191014/ourmid/pngtree-pin-food-delivery-map-location-delivery-logo-concept-image_318151.jpg"
+        />
+      </div>
+      <div className="nav-items">
+        <ul>
+          <li>Home</li>
+          <li>About Us</li>
+          <li>Contact Us</li>
+          <li>Cart</li>
+        </ul>
+      </div>
     </div>
   );
 };
-const ele = <span><Component1 /></span>
-const TitleComponent = () => {
+const RestaurantCard = (props) => {
+  const {
+    resData: {
+      info: { cloudinaryImageId, name, cuisines, avgRating, costForTwo, sla },
+    },
+  } = props;
   return (
-    <div>
-      <h1>Counter 1</h1>
-      {/* {<CounterComponent initialCount={1} />}  if call as component, then make this component to accept and read the props via props.*/}
-      {Counter1} 
-      {/* I. call the react element like this */}
-      <h1>Counter 2</h1>
-      {ele}
+    <div className="res-card" style={{ backgroundColor: "#f0f0f0" }}>
+      <img
+        src={
+          "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/" +
+          cloudinaryImageId
+        }
+        alt="res-logo"
+        className="res-logo"
+      />
+      <h3>{name}</h3>
+      <h4>{cuisines?.join(", ")}</h4>
+      <h4>{avgRating} stars</h4>
+      <h4>{costForTwo}</h4>
+      <h4>{sla?.deliveryTime} mins</h4>
+    </div>
+  );
+};
+
+const Body = () => {
+  return (
+    <div className="body">
+      <div className="search">Search</div>
+      <div className="res-container">
+        {resList?.map((res) => (
+          <RestaurantCard resData={res} key={res?.info?.id} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const App = () => {
+  return (
+    <div className="app">
+      <Header />
+      <Body />
     </div>
   );
 };
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<TitleComponent />);
+root.render(<App />);
