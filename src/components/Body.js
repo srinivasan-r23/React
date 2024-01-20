@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
+import Shimmer from "./Shimmer";
 
 const Body = (props) => {
   const [listOfRestaurant, setListOfRestaurant] = useState([]);
+  const [filteredRestaurant, setFilteredRestaurant] = useState([]);
+
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -20,33 +24,45 @@ const Body = (props) => {
       json?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
     );
+    setFilteredRestaurant(
+      json?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants
+    );
   };
   const filterHandler = () => {
     const filteredRestaurant = listOfRestaurant?.filter(
       (res) => res?.info?.avgRating >= 4
     );
-    setListOfRestaurant(filteredRestaurant);
+    setFilteredRestaurant(filteredRestaurant);
   };
-  const searchHandler = (e) => {
-    const query = e.target.value;
+  const searchHandler = () => {
     const filteredRestaurant = listOfRestaurant?.filter((res) =>
-      res?.info?.name?.toLowerCase()?.includes(query)
+      res?.info?.name?.toLowerCase()?.includes(searchText?.toLowerCase())
     );
-    setListOfRestaurant(filteredRestaurant);
+    setFilteredRestaurant(filteredRestaurant);
   };
-  if (listOfRestaurant?.length === 0) return <h1>Loading</h1>;
-  return (
+
+  return listOfRestaurant?.length === 0 ? (
+    <Shimmer />
+  ) : (
     <div className="body">
       <div className="filter">
+        <div className="search">
+          <input
+            type="text"
+            className="search-input"
+            onChange={(e) => setSearchText(e?.target?.value)}
+            value={searchText}
+          />
+          <button onClick={() => searchHandler()}>Search</button>
+        </div>
         <button className="filter-btn" onClick={filterHandler}>
           Top Rated Restaurant
         </button>
       </div>
-      <div className="search">
-        <input type="text" className="search-input" onChange={searchHandler} />
-      </div>
+
       <div className="res-container">
-        {listOfRestaurant?.map((res) => (
+        {filteredRestaurant?.map((res) => (
           <RestaurantCard resData={res} key={res?.info?.id} />
         ))}
       </div>
