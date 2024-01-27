@@ -15,11 +15,11 @@ class About extends Component {
     console.log("parent render called");
     return (
       <>
-        <User
+        {/* <User
           name={"Srini - Function compoennt"}
           location={"Salem"}
           contact={"9876543210"}
-        />
+        /> */}
         <UserClass
           name={"Srini - Class compoennt"}
           location={"Salem"}

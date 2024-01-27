@@ -1,5 +1,7 @@
+import ExampleComponent from "./Example";
+
 const Contact = () => {
-  return <div>Contact</div>;
+  return <ExampleComponent />;
 };
 
 export default Contact;

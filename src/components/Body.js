@@ -2,34 +2,19 @@ import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useRestaurant from "../utils/useRestaurant";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = (props) => {
-  const [listOfRestaurant, setListOfRestaurant] = useState([]);
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
-
   const [searchText, setSearchText] = useState("");
+  const listOfRestaurant = useRestaurant();
+  const onlineStatus = useOnlineStatus();
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    listOfRestaurant?.length && setFilteredRestaurant(listOfRestaurant);
+  }, [listOfRestaurant]);
 
-  const fetchData = async () => {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9801436&lng=77.5685724&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
-
-    // we need to convert the data into json;
-
-    const json = await data?.json();
-    setListOfRestaurant(
-      json?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants
-    );
-    setFilteredRestaurant(
-      json?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants
-    );
-  };
   const filterHandler = () => {
     const filteredRestaurant = listOfRestaurant?.filter(
       (res) => res?.info?.avgRating >= 4
@@ -42,7 +27,10 @@ const Body = (props) => {
     );
     setFilteredRestaurant(filteredRestaurant);
   };
-
+  if (onlineStatus === false)
+    return (
+      <h1>Looks like you're offline. Please check your internet connection.</h1>
+    );
   return listOfRestaurant?.length === 0 ? (
     <Shimmer />
   ) : (
