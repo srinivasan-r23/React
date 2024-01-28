@@ -10,9 +10,9 @@ const RestaurantMenu = () => {
   if (resInfo === null) return <Shimmer />;
 
   return (
-    <div className="menu">
-      <h1>{resInfo?.data?.cards?.[0]?.card?.card?.info?.name}</h1>
-      <p>
+    <div className="p-8 mx-12">
+      <h1 className="font-bold text-4xl text-red-600 bg-red-100 rounded-2xl text-center py-2 mb-4">{resInfo?.data?.cards?.[0]?.card?.card?.info?.name}</h1>
+      <p className="text-2xl bg-slate-100 rounded-2xl py-2 mb-2 text-center">
         {resInfo?.data?.cards?.[0]?.card?.card?.info?.cuisines?.join(", ")} -{" "}
         {resInfo?.data?.cards?.[0]?.card?.card?.info?.costForTwoMessage}
       </p>
@@ -22,16 +22,16 @@ const RestaurantMenu = () => {
             const _card = card?.card?.card?.categories?.[0]?.itemCards ?? card?.card?.card?.itemCards;
             return (
               <div key={new Date().getTime()}>
-                <h2>{card?.card?.card?.title}</h2>
+                {card?.card?.card?.title && <h2 className="text-xl font-bold mt-4 mb-2 rounded-2xl bg-orange-100 p-4">{card?.card?.card?.title}</h2>}
                 {_card?.map((card) => (
                   <div
-                    key={card?.card?.info?.id}
-                    style={{ display: "flex", justifyContent: "space-between" }}
+                    key={card?.card?.info?.id} className="flex justify-between pb-2 text-lg"
                   >
-                    <p>{card?.card?.info?.name}</p>
-                    <p>₹{card?.card?.info?.price / 100}</p>
+                    <p className="">{card?.card?.info?.name}</p>
+                    <p className="">₹{card?.card?.info?.price / 100}</p>
                   </div>
                 ))}
+                <hr className="my-6"/>
               </div>
             );
           }
