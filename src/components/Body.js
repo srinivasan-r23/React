@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useRestaurant from "../utils/useRestaurant";
@@ -10,6 +10,7 @@ const Body = (props) => {
   const [searchText, setSearchText] = useState("");
   const listOfRestaurant = useRestaurant();
   const onlineStatus = useOnlineStatus();
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
   useEffect(() => {
     listOfRestaurant?.length && setFilteredRestaurant(listOfRestaurant);
@@ -27,6 +28,7 @@ const Body = (props) => {
     );
     setFilteredRestaurant(filteredRestaurant);
   };
+  console.log(filteredRestaurant)
   if (onlineStatus === false)
     return (
       <h1>Looks like you're offline. Please check your internet connection.</h1>
@@ -61,7 +63,9 @@ const Body = (props) => {
       <div className="flex flex-wrap">
         {filteredRestaurant?.map((res) => (
           <Link to={"/restaurant/" + res?.info?.id} key={res?.info?.id}>
-            <RestaurantCard resData={res} />
+            {
+              res?.info?.avgRating >= 4.5 ? <RestaurantCardPromoted resData={res} /> : <RestaurantCard resData={res} />
+            }
           </Link>
         ))}
       </div>
