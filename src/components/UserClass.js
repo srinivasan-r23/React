@@ -53,7 +53,7 @@ class UserClass extends React.Component {
         >
           {`Increase`}
         </button> */}
-        
+        <h1>{this.props?.name}</h1>
         <h2>Name: {userInfo?.name}</h2>
         <h3>Location: {userInfo?.location}</h3>
         <h4>type: {userInfo?.type}</h4>
