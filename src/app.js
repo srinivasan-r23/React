@@ -6,10 +6,13 @@ import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
 
 const Grocery = lazy(() => import("./components/Grocery"));
 const About = lazy(() => import("./components/About"));
 const Contact = lazy(() => import("./components/Contact"));
+const Cart = lazy(() => import('./components/Cart'));
 
 const App = () => {
   const [userName, setUserName] = useState("");
@@ -17,20 +20,22 @@ const App = () => {
     setTimeout(() => setUserName("Srini"), 5000);
   }, []);
   return (
-    <UserContext.Provider value={{ user: userName, setUserName }}>
-      <div className="app">
-        {/* <UserContext.Provider value={{user: userName}}> // perfectly valid code */}
+    <Provider store={appStore}>
+      <UserContext.Provider value={{ user: userName, setUserName }}>
+        <div className="app">
+          {/* <UserContext.Provider value={{user: userName}}> // perfectly valid code */}
 
-        <Header />
-        {/* </UserContext.Provider> */}
+          <Header />
+          {/* </UserContext.Provider> */}
 
-        {/* in order to use this header to all our pages like to  body, about us, contact us page, we need to pass those components to children */}
-        {/* <Body /> */}
+          {/* in order to use this header to all our pages like to  body, about us, contact us page, we need to pass those components to children */}
+          {/* <Body /> */}
 
-        {/* when the path is changed, the outlet will be filled with the children component mentioned in the config based on the path provided */}
-        <Outlet />
-      </div>
-    </UserContext.Provider>
+          {/* when the path is changed, the outlet will be filled with the children component mentioned in the config based on the path provided */}
+          <Outlet />
+        </div>
+      </UserContext.Provider>
+    </Provider>
   );
 };
 
@@ -76,6 +81,14 @@ const appRouter = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: '/cart',
+        element: (
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <Cart />
+          </Suspense>
+        )
+      }
     ],
   },
 ]);

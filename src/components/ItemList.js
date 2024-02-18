@@ -1,8 +1,16 @@
 import React from "react";
 import { CDN_URL } from "../utils/constants";
+import { addItem } from "../utils/cartSlice";
+import { useDispatch } from "react-redux";
 
 const ItemList = ({ card, collapse }) => {
   const price = card?.info?.price ?? card?.info?.defaultPrice;
+  const dispatch = useDispatch();
+
+  const handleAddItem = (item) => {
+    dispatch(addItem(item))
+  }
+
   return (
     <div
       className={`flex justify-between pb-2 text-lg p-2 ${
@@ -13,7 +21,7 @@ const ItemList = ({ card, collapse }) => {
         <p className="text-lg">{card?.info?.name}</p>
         <p className="text-sm">₹{price / 100}</p>
         <p className="text-xs w-1/2 text-slate-400 pt-2">
-          {card?.info?.description}
+          {card?.info?.description}`
         </p>
       </div>
       <>
@@ -27,6 +35,7 @@ const ItemList = ({ card, collapse }) => {
             <button
               type="submit"
               className="rounded-lg border-orange-500 border w-full text-xs"
+              onClick={() => handleAddItem(card)}
             >
               Add
             </button>
@@ -36,6 +45,7 @@ const ItemList = ({ card, collapse }) => {
           <button
             type="submit"
             className="rounded-lg border-orange-500 border px-3 text-xs"
+            onClick={() => handleAddItem(card)}
           >
             Add
           </button>
