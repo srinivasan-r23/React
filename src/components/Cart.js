@@ -8,7 +8,7 @@ const Cart = () => {
     const dispatch = useDispatch();
     
   console.log(cartItems);
-    if(cartItems?.length <= 0) return <h1>Your cart is empty</h1>
+    if(cartItems?.length <= 0) return <h1 className="text-3xl text-center">Your cart is empty</h1>
   return (
     <div className="text-center m-4 p-4">
       <h1 className="text-2xl font-bold">Cart</h1>
