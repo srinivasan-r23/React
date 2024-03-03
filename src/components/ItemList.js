@@ -12,7 +12,7 @@ const ItemList = ({ card, collapse }) => {
   }
 
   return (
-    <div
+    <div data-testid="foodItems"
       className={`flex justify-between pb-2 text-lg p-2 ${
         collapse ? "hidden" : "block"
       }`}
@@ -59,7 +59,7 @@ const withBestSeller = (ItemList) => {
   return (props) => {
     const isBestSeller = props?.card?.info?.isBestseller;
     return (
-      <div className="relative">
+      <div className="relative" >
         {isBestSeller && (
           <p className="absolute text-[#ee9c00] inline-block top-0">
             <svg

@@ -19,7 +19,7 @@ const {user, setUserName} = useContext(UserContext);
 
   const filterHandler = () => {
     const filteredRestaurant = listOfRestaurant?.filter(
-      (res) => res?.info?.avgRating >= 4
+      (res) => res?.info?.avgRating >= 4.5
     );
     setFilteredRestaurant(filteredRestaurant);
   };
@@ -29,7 +29,7 @@ const {user, setUserName} = useContext(UserContext);
     );
     setFilteredRestaurant(filteredRestaurant);
   };
-  console.log(filteredRestaurant)
+  //console.log(filteredRestaurant)
   if (onlineStatus === false)
     return (
       <h1>Looks like you're offline. Please check your internet connection.</h1>
@@ -42,6 +42,7 @@ const {user, setUserName} = useContext(UserContext);
         <div className="m-4 p-4 flex w-full">
           <div className="flex flex-1">
           <input
+            data-testid = "searchInput" // jest will identify this for getting the text
             type="text"
             className="border border-solid border-slate-300 px-4 rounded-md flex-1 outline-none"
             onChange={(e) => setSearchText(e?.target?.value)}
